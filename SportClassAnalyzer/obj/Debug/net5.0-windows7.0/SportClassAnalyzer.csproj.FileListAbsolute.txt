@@ -1,0 +1,7 @@
+C:\LocalDev\SportClassRacing\SportClassAnalyzer\obj\Debug\net5.0-windows7.0\SportClassAnalyzer.csproj.AssemblyReference.cache
+C:\LocalDev\SportClassRacing\SportClassAnalyzer\obj\Debug\net5.0-windows7.0\SportClassAnalyzer.Form1.resources
+C:\LocalDev\SportClassRacing\SportClassAnalyzer\obj\Debug\net5.0-windows7.0\SportClassAnalyzer.csproj.GenerateResource.cache
+C:\LocalDev\SportClassRacing\SportClassAnalyzer\obj\Debug\net5.0-windows7.0\SportClassAnalyzer.GeneratedMSBuildEditorConfig.editorconfig
+C:\LocalDev\SportClassRacing\SportClassAnalyzer\obj\Debug\net5.0-windows7.0\SportClassAnalyzer.AssemblyInfoInputs.cache
+C:\LocalDev\SportClassRacing\SportClassAnalyzer\obj\Debug\net5.0-windows7.0\SportClassAnalyzer.AssemblyInfo.cs
+C:\LocalDev\SportClassRacing\SportClassAnalyzer\obj\Debug\net5.0-windows7.0\SportClassAnalyzer.csproj.CoreCompileInputs.cache

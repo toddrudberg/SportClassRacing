@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "JJ/sWr0Klpq3EbqufvnJhRIt2E8Eq9uJo7nE5lVXuLJUnYD7iF65oeb4VhPU/X9lVufP2qT+/SrO1g5E51Iktg==",
+  "success": true,
+  "projectFilePath": "C:\\LocalDev\\SportClassRacing\\SportClassAnalyzer\\SportClassAnalyzer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\toddr\\.nuget\\packages\\microsoft.web.webview2\\1.0.2792.45\\microsoft.web.webview2.1.0.2792.45.nupkg.sha512"
+  ],
+  "logs": []
+}
