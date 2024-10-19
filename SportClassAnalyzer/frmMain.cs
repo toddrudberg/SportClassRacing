@@ -90,6 +90,7 @@ namespace SportClassAnalyzer
             // Set the form's position at the top right of the screen
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(screenWidth - this.Width, 0); // Right edge, top of screen
+
             buildRace();
             // Start race-building process asynchronously
             //_ = buildRaceAsync();
@@ -139,6 +140,8 @@ namespace SportClassAnalyzer
             {
                 listBox2.Items.Add(gpxTrkTrkpt);
             }
+
+            
 
 
             myRaceData.myRaceData = raceData.trk.trkseg.ToList();
@@ -219,6 +222,32 @@ namespace SportClassAnalyzer
             double lon2 = (double)pylons.startFinishPylon().lon;
             string script2 = $"drawLineBetweenPoints({lat1}, {lon1}, {lat2}, {lon2}, 'black');";
             await webView2Control.ExecuteScriptAsync(script2);
+
+            // make a list of pylons not including the start finish pylon
+            var pylonsList = pylons.pylonWpts.Where(p => p.name != "StartFinish").ToList();
+            // draw lines between the pylonsList
+            for (int i = 0; i < pylonsList.Count; i++)
+            {
+                pylonWpt pylon = pylonsList[i];
+                pylonWpt pylon1 = new pylonWpt();
+                if (i == pylonsList.Count - 1)
+                {
+                    pylon1 = pylons.homePylon();
+                }
+                else
+                {
+                    pylon1 = pylonsList[i + 1];
+                }
+                // Convert latitude and longitude from decimal to double
+                lat1 = (double)pylon.lat;
+                lon1 = (double)pylon.lon;
+                lat2 = (double)pylon1.lat;
+                lon2 = (double)pylon1.lon;
+                string script = $"drawLineBetweenPoints({lat1}, {lon1}, {lat2}, {lon2}, 'black');";
+                await webView2Control.ExecuteScriptAsync(script);
+            }
+
+
         }
 
         // Define different colors for each lap
