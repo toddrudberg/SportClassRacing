@@ -57,15 +57,35 @@
             }).addTo(map);
 
             // If there are at least two points, draw the polyline for this lap
-            // if (raceDataPoints.length > 1) {
-            //     // Draw a new polyline connecting all race data points with the given color
-            //     L.polyline(raceDataPoints, { color: color }).addTo(map);
-            // }
+            if (raceDataPoints.length > 1) {
+                // Draw a new polyline connecting all race data points with the given color
+                L.polyline(raceDataPoints, { color: color }).addTo(map);
+            }
         }
 
         // Function to start a new lap with a different color
         function startNewLap() {
             raceDataPoints = []; // Reset race data points for the new lap
+        }
+
+        // Function to draw a line between two points
+        function drawLineBetweenPoints(lat1, lon1, lat2, lon2, color) {
+            // Create an array with the two points
+            var linePoints = [[lat1, lon1], [lat2, lon2]];
+
+            // Draw a polyline between the two points with the specified color
+            L.polyline(linePoints, { color: color }).addTo(map);
+        }
+
+                // Function to add a single point with a specific color
+        function addColoredPoint(lat, lon, color) {
+            L.circleMarker([lat, lon], {
+                radius: 8,           // Size of the point
+                color: color,        // Border color
+                fillColor: color,    // Fill color (same as border)
+                fillOpacity: 1       // Solid fill
+            }).addTo(map)
+              .bindPopup(`Point at (${lat}, ${lon})`); // Optional popup to display coordinates
         }
     </script>
 </body>

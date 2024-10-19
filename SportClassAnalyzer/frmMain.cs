@@ -115,7 +115,7 @@ namespace SportClassAnalyzer
             }
             //write the pylons to a listbox
             myPylons.pylonWpts = pylons.wpt.ToList();
-            myPylons.assignCartisianCoordinates();
+            myPylons.assignCartisianCoordinates(pylons.elevationInFeet);
             myPylons.assignSegments();
 
 
@@ -171,7 +171,7 @@ namespace SportClassAnalyzer
             if (args.IsSuccess)
             {
                 Console.WriteLine("Drawing Pylons");
-                PlotPylons(myPylons.pylonWpts);
+                PlotPylons(myPylons);
                 Console.WriteLine("Drawing Race Data");
                 PlotRaceData(myRaceData.myRaceData, myLapCrossings);
                 Console.WriteLine("Map Updated");
@@ -199,9 +199,10 @@ namespace SportClassAnalyzer
             SetWindowPos(consoleWindowHandle, HWND_TOP, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOSIZE);
         }
 
-        public async void PlotPylons(List<pylonWpt> pylons)
+        public async void PlotPylons(cPylons pylons)
         {
-            foreach (var pylon in pylons)
+
+            foreach (var pylon in pylons.pylonWpts)
             {
                 // Convert latitude and longitude from decimal to double
                 double lat = (double)pylon.lat;
@@ -212,6 +213,12 @@ namespace SportClassAnalyzer
                 string script = $"addPylonMarker({lat}, {lon}, '{name}');";
                 await webView2Control.ExecuteScriptAsync(script);
             }
+            double lat1 = (double)pylons.homePylon().lat;
+            double lon1 = (double)pylons.homePylon().lon;
+            double lat2 = (double)pylons.startFinishPylon().lat;
+            double lon2 = (double)pylons.startFinishPylon().lon;
+            string script2 = $"drawLineBetweenPoints({lat1}, {lon1}, {lat2}, {lon2}, 'black');";
+            await webView2Control.ExecuteScriptAsync(script2);
         }
 
         // Define different colors for each lap
@@ -239,7 +246,6 @@ namespace SportClassAnalyzer
 
         public async void PlotRaceData(List<racePoint> myRaceData, List<cLapCrossings> lapCrossings)
         {
-
             lapIndex = 1;
             
             // Use a different color for each lap
@@ -248,20 +254,27 @@ namespace SportClassAnalyzer
             // Call JavaScript to start a new lap (reset points for new polyline)
             await webView2Control.ExecuteScriptAsync("startNewLap();");
 
-
-            foreach (var dataPoint in myRaceData)
+            for( int nLap = 0; nLap < lapCrossings.Count - 1; nLap++)
             {
-                // Convert latitude and longitude from decimal to double
-                double lat = (double)dataPoint.lat;
-                double lon = (double)dataPoint.lon;
+                // Use a different color for each lap
+                lapColor = lapColors[lapIndex % lapColors.Length]; // Cycle through colors if needed
+                Console.WriteLine($"Lap {nLap + 1} is {lapColor}");
 
-                // Inject JavaScript to add the marker to the map with lap-specific color
-                string script = $"addRaceDataPoint({lat}, {lon}, '{lapColor}');";
-                await webView2Control.ExecuteScriptAsync(script);
+                // Call JavaScript to start a new lap (reset points for new polyline)
+                await webView2Control.ExecuteScriptAsync("startNewLap();");
+
+                for (int i = lapCrossings[nLap].dataPoint; i < lapCrossings[nLap + 1].dataPoint; i++)
+                {
+                    // Convert latitude and longitude from decimal to double
+                    double lat = (double)myRaceData[i].lat;
+                    double lon = (double)myRaceData[i].lon;
+
+                    // Inject JavaScript to add the marker to the map with lap-specific color
+                    string script = $"addRaceDataPoint({lat}, {lon}, '{lapColor}');";
+                    await webView2Control.ExecuteScriptAsync(script);
+                }
+                lapIndex++;
             }
         }
-
-
-
     }
 }

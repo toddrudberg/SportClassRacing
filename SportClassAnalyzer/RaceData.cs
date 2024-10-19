@@ -35,10 +35,10 @@ namespace SportClassAnalyzer
 
         public void assignCartisianCoordinates(pylonWpt homePylon)
         {
-            foreach (var dp in myRaceData)
+            foreach (racePoint dp in myRaceData)
             {
                 // Calculate distance and bearing from home pylon to this pylon
-                double distance = cLatLon.HaversineDistance(homePylon.lat, homePylon.lon, dp.lat, dp.lon);
+                double distance = cLatLon.HaversineDistance(homePylon.lat, homePylon.lon, dp.lat, dp.lon, dp.altitudeInFeet);
                 double bearing = cLatLon.CalculateBearing(homePylon.lat, homePylon.lon, dp.lat, dp.lon);
 
                 // Convert polar coordinates (distance, bearing) to Cartesian coordinates
@@ -241,6 +241,14 @@ namespace SportClassAnalyzer
             set
             {
                 this.eleField = value;
+            }
+        }
+
+        public double altitudeInFeet
+        {
+            get
+            {
+                return (double)ele * 3.28084;
             }
         }
 

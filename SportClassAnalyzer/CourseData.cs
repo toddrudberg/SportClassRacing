@@ -56,12 +56,10 @@ namespace SportClassAnalyzer
             return startFinishPylonPoint;
         }
 
-        public void assignCartisianCoordinates()
+        public void assignCartisianCoordinates(double elevationInFeet = 0)
         {
+            var homePylon = this.homePylon();
             
-            //let's use the where statement to find the home pylon
-            var homePylon = pylonWpts.Where(p => p.name == "Home").FirstOrDefault();
-
             if (homePylon != null)
             {
                 homePylon.X = 0.0;
@@ -75,7 +73,7 @@ namespace SportClassAnalyzer
                 foreach (var pylon in pylons)
                 {
                     // Calculate distance and bearing from home pylon to this pylon
-                    double distance = cLatLon.HaversineDistance(homePylon.lat, homePylon.lon, pylon.lat, pylon.lon);
+                    double distance = cLatLon.HaversineDistance(homePylon.lat, homePylon.lon, pylon.lat, pylon.lon, elevationInFeet);
                     double bearing = cLatLon.CalculateBearing(homePylon.lat, homePylon.lon, pylon.lat, pylon.lon);
 
                     // Convert polar coordinates (distance, bearing) to Cartesian coordinates
@@ -118,8 +116,6 @@ namespace SportClassAnalyzer
 
             return output;
         }
-
-
     }
 
 
@@ -132,13 +128,32 @@ namespace SportClassAnalyzer
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
     public partial class pylons
     {
-
+        private ushort eleField;
         private pylonWpt[] wptField;
 
         private decimal versionField;
 
         private string creatorField;
 
+        public ushort ele
+        {
+            get
+            {
+                return this.eleField;
+            }
+            set
+            {
+                this.eleField = value;
+            }
+        }
+
+        public double elevationInFeet
+        {
+            get
+            {
+                return ele * 3.28084;
+            }
+        }
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("wpt")]
         public pylonWpt[] wpt

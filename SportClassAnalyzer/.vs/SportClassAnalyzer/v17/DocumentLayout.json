@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "C:\\LocalDev\\SportClassRacing\\SportClassAnalyzer\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BA441A4C-B626-4B51-9B23-134D26EF7327}|SportClassAnalyzer.csproj|c:\\localdev\\sportclassracing\\sportclassanalyzer\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BA441A4C-B626-4B51-9B23-134D26EF7327}|SportClassAnalyzer.csproj|solutionrelative:frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{BA441A4C-B626-4B51-9B23-134D26EF7327}|SportClassAnalyzer.csproj|c:\\localdev\\sportclassracing\\sportclassanalyzer\\coursedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BA441A4C-B626-4B51-9B23-134D26EF7327}|SportClassAnalyzer.csproj|solutionrelative:coursedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BA441A4C-B626-4B51-9B23-134D26EF7327}|SportClassAnalyzer.csproj|c:\\localdev\\sportclassracing\\sportclassanalyzer\\racedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BA441A4C-B626-4B51-9B23-134D26EF7327}|SportClassAnalyzer.csproj|solutionrelative:racedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BA441A4C-B626-4B51-9B23-134D26EF7327}|SportClassAnalyzer.csproj|c:\\localdev\\sportclassracing\\sportclassanalyzer\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BA441A4C-B626-4B51-9B23-134D26EF7327}|SportClassAnalyzer.csproj|solutionrelative:frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{BA441A4C-B626-4B51-9B23-134D26EF7327}|SportClassAnalyzer.csproj|c:\\localdev\\sportclassracing\\sportclassanalyzer\\2dvector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,17 +30,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "frmMain.cs",
               "DocumentMoniker": "C:\\LocalDev\\SportClassRacing\\SportClassAnalyzer\\frmMain.cs",
               "RelativeDocumentMoniker": "frmMain.cs",
               "ToolTip": "C:\\LocalDev\\SportClassRacing\\SportClassAnalyzer\\frmMain.cs",
               "RelativeToolTip": "frmMain.cs",
-              "ViewState": "AQIAAOkAAAAAAAAAAAApwPoAAAAAAAAA",
+              "ViewState": "AQIAAO8AAAAAAAAAAAAAABgBAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-16T21:11:34.555Z",
               "IsPinned": true,
@@ -52,13 +48,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "CourseData.cs",
               "DocumentMoniker": "C:\\LocalDev\\SportClassRacing\\SportClassAnalyzer\\CourseData.cs",
               "RelativeDocumentMoniker": "CourseData.cs",
               "ToolTip": "C:\\LocalDev\\SportClassRacing\\SportClassAnalyzer\\CourseData.cs",
               "RelativeToolTip": "CourseData.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAABsAAAAJAAAA",
+              "ViewState": "AQIAADEAAAAAAAAAAAAkwEwAAAByAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-17T13:02:27.692Z",
               "IsPinned": true,
@@ -66,13 +62,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "2dVector.cs",
               "DocumentMoniker": "C:\\LocalDev\\SportClassRacing\\SportClassAnalyzer\\2dVector.cs",
               "RelativeDocumentMoniker": "2dVector.cs",
               "ToolTip": "C:\\LocalDev\\SportClassRacing\\SportClassAnalyzer\\2dVector.cs",
               "RelativeToolTip": "2dVector.cs",
-              "ViewState": "AQIAAB0AAAAAAAAAAAApwDUAAAAUAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAD4AAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-17T13:08:04.749Z",
               "IsPinned": true,
@@ -80,7 +76,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "frmMain.Designer.cs",
               "DocumentMoniker": "C:\\LocalDev\\SportClassRacing\\SportClassAnalyzer\\frmMain.Designer.cs",
               "RelativeDocumentMoniker": "frmMain.Designer.cs",
@@ -88,24 +84,12 @@
               "RelativeToolTip": "frmMain.Designer.cs",
               "ViewState": "AQIAABMAAAAAAAAAAAAlwCcAAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-17T15:18:40.388Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "RaceData.cs",
-              "DocumentMoniker": "C:\\LocalDev\\SportClassRacing\\SportClassAnalyzer\\RaceData.cs",
-              "RelativeDocumentMoniker": "RaceData.cs",
-              "ToolTip": "C:\\LocalDev\\SportClassRacing\\SportClassAnalyzer\\RaceData.cs",
-              "RelativeToolTip": "RaceData.cs",
-              "ViewState": "AQIAABoAAAAAAAAAAAAAwDMAAAAhAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-16T22:57:56.979Z",
+              "WhenOpened": "2024-10-17T15:18:40.388Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "frmMain.cs [Design]",
               "DocumentMoniker": "C:\\LocalDev\\SportClassRacing\\SportClassAnalyzer\\frmMain.cs",
               "RelativeDocumentMoniker": "frmMain.cs",
