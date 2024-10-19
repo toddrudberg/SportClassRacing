@@ -29,9 +29,12 @@
         var pylonIcon = L.icon({
             iconUrl: 'flag_icon_24x24-cutout.png', // Ensure this file is in the same directory
             iconSize: [14, 24],       // Size of the icon
-            iconAnchor: [0, 24],     // Anchor point for centering
+            iconAnchor: [0, 24],      // Anchor point for centering
             popupAnchor: [7, -24]     // Position the popup above the icon
         });
+
+        // Array to hold race data points
+        var raceDataPoints = [];
 
         // Function to add custom pylon marker with flag icon
         function addPylonMarker(lat, lon, name) {
@@ -39,15 +42,30 @@
                 .bindPopup(name); // Display name on click
         }
 
-        // Function to add small dot markers for race data
-        function addRaceDataPoint(lat, lon) {
+        // Function to add race data points and draw a polyline for a specific lap
+        function addRaceDataPoint(lat, lon, color) {
+            // Add each data point to the array
+            raceDataPoints.push([lat, lon]);
+
+            // Add circle marker to the map for the point
             L.circleMarker([lat, lon], {
-                radius: 1,           // Small radius for race data dot
-                color: '#3388ff',    // Border color for dot
-                opacity: 0.5,           // Border transparency
+                radius: 1,            // Small radius for race data dot
+                color: '#3388ff',     // Border color for dot
+                opacity: 0.5,         // Border transparency
                 fillColor: '#3388ff', // Fill color
-                fillOpacity: .1       // Solid color for visibility
+                fillOpacity: 0.1      // Slightly transparent
             }).addTo(map);
+
+            // If there are at least two points, draw the polyline for this lap
+            if (raceDataPoints.length > 1) {
+                // Draw a new polyline connecting all race data points with the given color
+                L.polyline(raceDataPoints, { color: color }).addTo(map);
+            }
+        }
+
+        // Function to start a new lap with a different color
+        function startNewLap() {
+            raceDataPoints = []; // Reset race data points for the new lap
         }
     </script>
 </body>

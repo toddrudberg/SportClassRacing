@@ -25,3 +25,4 @@ C:\LocalDev\SportClassRacing\SportClassAnalyzer\obj\Debug\net8.0-windows7.0\refi
 C:\LocalDev\SportClassRacing\SportClassAnalyzer\obj\Debug\net8.0-windows7.0\SportClassAnalyzer.pdb
 C:\LocalDev\SportClassRacing\SportClassAnalyzer\obj\Debug\net8.0-windows7.0\SportClassAnalyzer.genruntimeconfig.cache
 C:\LocalDev\SportClassRacing\SportClassAnalyzer\obj\Debug\net8.0-windows7.0\ref\SportClassAnalyzer.dll
+C:\LocalDev\SportClassRacing\SportClassAnalyzer\obj\Debug\net8.0-windows7.0\SportClassAnalyzer.sourcelink.json
