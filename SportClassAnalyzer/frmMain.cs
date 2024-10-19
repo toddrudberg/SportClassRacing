@@ -11,7 +11,7 @@ namespace SportClassAnalyzer
         public class cFormState
         {
             public static string sPylonFile = @"C:\LocalDev\SportClassRacing\SportClassOuterCourse.gpx";
-            //public static string sRaceDataFile = @"C:\LocalDev\SportClassRacing\TestData.gpx";
+           //public static string sRaceDataFile = @"C:\LocalDev\SportClassRacing\TestData.gpx";
             //public static string sRaceDataFile = @"C:\LocalDev\SportClassRacing\Slater Data\20241018_104841.gpx";
             //public static string sRaceDataFile = @"C:\LocalDev\SportClassRacing\Slater Data\20241018_142045.gpx";
             public static string sRaceDataFile = @"C:\LocalDev\SportClassRacing\Slater Data\20241018_142045.gpx";
@@ -22,6 +22,8 @@ namespace SportClassAnalyzer
 
         public cPylons myPylons = new cPylons();
         public cRaceData myRaceData = new cRaceData();
+
+        public List<cLapCrossings> myLapCrossings = new List<cLapCrossings>();
 
         private bool isRaceBuilt = false;
         private TaskCompletionSource<bool> raceBuiltCompletionSource = new TaskCompletionSource<bool>();
@@ -142,7 +144,7 @@ namespace SportClassAnalyzer
             myRaceData.myRaceData = raceData.trk.trkseg.ToList();
             myRaceData.assignCartisianCoordinates(myPylons.homePylon());
             myRaceData.calculateSpeedsAndTruncate(100);
-            myRaceData.detectLaps(myPylons.homePylonPoint(), myPylons.startFinishPylonPoint());
+            myRaceData.detectLaps(myPylons, out myLapCrossings);
         }
 
         private async Task DisplayMap()
@@ -171,7 +173,7 @@ namespace SportClassAnalyzer
                 Console.WriteLine("Drawing Pylons");
                 PlotPylons(myPylons.pylonWpts);
                 Console.WriteLine("Drawing Race Data");
-                PlotRaceData(myRaceData.myRaceData);
+                PlotRaceData(myRaceData.myRaceData, myLapCrossings);
                 Console.WriteLine("Map Updated");
             }
         }
@@ -235,7 +237,7 @@ namespace SportClassAnalyzer
 
         int lapIndex = 0; // To track lap number
 
-        public async void PlotRaceData(List<racePoint> myRaceData)
+        public async void PlotRaceData(List<racePoint> myRaceData, List<cLapCrossings> lapCrossings)
         {
 
             lapIndex = 1;

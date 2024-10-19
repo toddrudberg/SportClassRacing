@@ -11,7 +11,7 @@ namespace SportClassAnalyzer
     {
     }
 
-public class cPoint
+    public class cPoint
     {
         public double X { get; set; }
         public double Y { get; set; }
@@ -25,10 +25,10 @@ public class cPoint
 
     public class LineCrossingDetector
     {
-        public static int DetectCrossings(List<racePoint> dataPoints, cPoint lineStart, cPoint lineEnd, out List<int> lapCrossings)
+        public static int DetectCrossings(List<racePoint> dataPoints, cPoint lineStart, cPoint lineEnd, out List<cLapCrossings> lapCrossings)
         {
             var crossings = new List<cPoint>();
-            lapCrossings = new List<int>();
+            lapCrossings = new List<cLapCrossings>();
 
             for (int i = 0; i < dataPoints.Count - 1; i++)
             {
@@ -37,7 +37,20 @@ public class cPoint
 
                 if (DoLinesIntersect(p1, p2, lineStart, lineEnd, out cPoint intersection))
                 {
-                    lapCrossings.Add(i);
+                    
+                    racePoint rp1 = dataPoints[i];
+                    racePoint rp2 = dataPoints[i + 1];
+                    //let's calculate the distance between p1 and intersection
+                    double distance1 = Math.Sqrt(Math.Pow(intersection.X - rp1.X, 2) + Math.Pow(intersection.Y - rp1.Y, 2));
+                    //let's calculate the distance between p2 and intersection
+                    double distance2 = Math.Sqrt(Math.Pow(intersection.X - rp2.X, 2) + Math.Pow(intersection.Y - rp2.Y, 2));
+                    //let's interpolate the time of the intersection
+                    TimeSpan time1 = rp1.time.TimeOfDay;
+                    TimeSpan time2 = rp2.time.TimeOfDay;
+                    double dtime1 = time1.TotalSeconds;
+                    double dtime2 = time2.TotalSeconds;
+                    double dtime = dtime1 + (dtime2 - dtime1) * distance1 / (distance1 + distance2);
+                    lapCrossings.Add(new cLapCrossings(i, dtime, intersection));
                     crossings.Add(intersection);
                     Console.WriteLine($"Crossing detected at: X={intersection.X}, Y={intersection.Y}");
                 }

@@ -14,6 +14,20 @@ namespace SportClassAnalyzer
         public double distanceFlown;
     }
 
+    public class cLapCrossings
+    {
+        public int dataPoint;
+        public double crossingTime;
+        public cPoint crossingPoint;
+
+        public cLapCrossings(int dataPoint, double crossingTime, cPoint crossingPoint)
+        {
+            this.dataPoint = dataPoint;
+            this.crossingTime = crossingTime;
+            this.crossingPoint = crossingPoint;
+        }
+    }
+
     public class cRaceData
     {
         public List<racePoint> myRaceData = new List<racePoint>();
@@ -34,15 +48,19 @@ namespace SportClassAnalyzer
             }
         }
 
-        public void detectLaps(cPoint homePylon, cPoint startFinishPylon)
+
+        public void detectLaps(cPylons pylons, out List<cLapCrossings> lapCrossings)
         {
-            List<int> lapCrossings;
+            cPoint homePylon = pylons.homePylonPoint();
+            cPoint startFinishPylon = pylons.startFinishPylonPoint();
+
+            //List<cLapCrossings> lapCrossings = new List<cLapCrossings>();
             int crossings = LineCrossingDetector.DetectCrossings(myRaceData, homePylon, startFinishPylon, out lapCrossings);
             Console.WriteLine("Lap detection complete");
             Console.WriteLine($"Number of laps detected: {crossings}");
             //truncate myRaceData to only include points between startOfRace and endOfRace
-            int startOfRace = lapCrossings[0];
-            int endOfRace = lapCrossings[lapCrossings.Count - 1];
+            int startOfRace = lapCrossings[0].dataPoint;
+            int endOfRace = lapCrossings[lapCrossings.Count - 1].dataPoint;
 
 
             if (lapCrossings.Count > 1)
@@ -50,13 +68,13 @@ namespace SportClassAnalyzer
 
                 for (int i = 1; i < lapCrossings.Count; i++)
                 {
-                    int startOfLap = lapCrossings[i - 1];
-                    int endOfLap = lapCrossings[i];
+                    int startOfLap = lapCrossings[i - 1].dataPoint;
+                    int endOfLap = lapCrossings[i].dataPoint;
                     List<racePoint> lapData = myRaceData.GetRange(startOfLap, endOfLap - startOfLap);
                     //calculate lap data
                     cLap lap = new cLap();
                     lap.maxSpeed = lapData.Max(p => p.speedMPH);
-                    lap.elapsedTime = (lapData[lapData.Count - 1].time - lapData[0].time).TotalSeconds;
+                    lap.elapsedTime = lapCrossings[i].crossingTime - lapCrossings[i - 1].crossingTime;
                     lap.averageSpeed = lapData.Average(p => p.speedMPH);
                     lap.distanceFlown = lapData
                         .Zip(lapData.Skip(1), (previous, current) =>
@@ -69,14 +87,15 @@ namespace SportClassAnalyzer
                     Console.WriteLine();
                     Console.WriteLine($"Lap {i}");
                     Console.WriteLine($"Elapsed Time: {Math.Round(lap.elapsedTime, 2).ToString("F2")} seconds");
-                    Console.WriteLine($"Average Speed: {Math.Round(lap.averageSpeed)} mph");
+                    Console.WriteLine($"PTP Speed: {(pylons.segments.Sum() / lap.elapsedTime * 3600 / 5280).ToString("F4")} mph");
+                    Console.WriteLine($"Average Speed: {Math.Round(lap.averageSpeed,4)} mph");
                     Console.WriteLine($"Max Speed: {Math.Round(lap.maxSpeed)} mph");
                     Console.WriteLine($"Distance Flown: {Math.Round(lap.distanceFlown / 5280, 2).ToString("F2")} miles");
                 }
                 Console.WriteLine();
             }
 
-            myRaceData = myRaceData.GetRange(startOfRace, endOfRace - startOfRace);
+            //myRaceData = myRaceData.GetRange(startOfRace, endOfRace - startOfRace);
         }
 
         public void calculateSpeedsAndTruncate(double limitSpeed)
@@ -88,7 +107,7 @@ namespace SportClassAnalyzer
             for (int i = 1; i < myRaceData.Count - 1; i++)
             {
                 double distance = Math.Sqrt(Math.Pow(myRaceData[lastIndex].X - myRaceData[i].X, 2) + Math.Pow(myRaceData[lastIndex].Y - myRaceData[i].Y, 2));
-                if( distance < 100)
+                if( distance < 10)
                 {
                     myRaceData[i].speedMPH = lastSpeed;
                     continue;

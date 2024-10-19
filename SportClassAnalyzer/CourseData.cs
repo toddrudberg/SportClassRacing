@@ -39,9 +39,19 @@ namespace SportClassAnalyzer
             return homePylonPoint;
         }
 
-        public cPoint startFinishPylonPoint()
+        public pylonWpt startFinishPylon()
         {
             pylonWpt startFinishPylon = pylonWpts.Where(p => p.name == "StartFinish").FirstOrDefault();
+            if (startFinishPylon == null)
+            {
+                Console.WriteLine("didn't find start finish pylon");
+                startFinishPylon = new pylonWpt();
+            }
+            return startFinishPylon;
+        }
+        public cPoint startFinishPylonPoint()
+        {
+            pylonWpt startFinishPylon = this.startFinishPylon();
             cPoint startFinishPylonPoint = new cPoint(startFinishPylon.X, startFinishPylon.Y);
             return startFinishPylonPoint;
         }
