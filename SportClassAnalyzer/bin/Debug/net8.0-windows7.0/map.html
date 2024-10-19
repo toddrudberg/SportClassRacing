@@ -59,7 +59,7 @@
             // If there are at least two points, draw the polyline for this lap
             if (raceDataPoints.length > 1) {
                 // Draw a new polyline connecting all race data points with the given color
-                L.polyline(raceDataPoints, { color: color }).addTo(map);
+                L.polyline(raceDataPoints, { color: color, weight: 1 }).addTo(map);
             }
         }
 
@@ -74,7 +74,8 @@
             var linePoints = [[lat1, lon1], [lat2, lon2]];
 
             // Draw a polyline between the two points with the specified color
-            L.polyline(linePoints, { color: color }).addTo(map);
+            
+            L.polyline(linePoints, { color: color, weight: 1 }).addTo(map);
         }
 
                 // Function to add a single point with a specific color
