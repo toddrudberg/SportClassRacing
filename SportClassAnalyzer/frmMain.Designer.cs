@@ -86,14 +86,14 @@
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(224, 26);
+            openToolStripMenuItem.Size = new Size(216, 26);
             openToolStripMenuItem.Text = "Open";
             openToolStripMenuItem.Click += openToolStripMenuItem_Click;
             // 
             // openRaceBoxFileToolStripMenuItem
             // 
             openRaceBoxFileToolStripMenuItem.Name = "openRaceBoxFileToolStripMenuItem";
-            openRaceBoxFileToolStripMenuItem.Size = new Size(224, 26);
+            openRaceBoxFileToolStripMenuItem.Size = new Size(216, 26);
             openRaceBoxFileToolStripMenuItem.Text = "Open RaceBox File";
             openRaceBoxFileToolStripMenuItem.Click += openRaceBoxFileToolStripMenuItem_Click;
             // 

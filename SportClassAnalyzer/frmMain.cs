@@ -1,4 +1,7 @@
 using Microsoft.Web.WebView2.Core;
+using OxyPlot.Series;
+using OxyPlot.WindowsForms;
+using OxyPlot;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -98,6 +101,27 @@ namespace SportClassAnalyzer
             // Wait until buildRace is complete before displaying the map
             //await raceBuiltCompletionSource.Task;
             //await DisplayMap();
+
+            // Create a new instance of PlotForm
+            var plotModel = new PlotModel { Title = "2D Map" };
+
+            // Create a scatter series
+            var scatterSeries = new ScatterSeries { MarkerType = MarkerType.Circle };
+
+            // Add some example points to the scatter series
+            scatterSeries.Points.Add(new ScatterPoint(10, 10));
+            scatterSeries.Points.Add(new ScatterPoint(20, 15));
+            scatterSeries.Points.Add(new ScatterPoint(30, 25));
+            scatterSeries.Points.Add(new ScatterPoint(40, 35));
+
+            // Add the scatter series to the plot model
+            plotModel.Series.Add(scatterSeries);
+
+            // Pass the generated PlotModel to the new form
+            var plotForm = new SportClassAnalyzer.plotForm(plotModel);
+            //var plotForm = new SportClassAnalyzer.plotForm();
+            // Show the new form as a modal dialog
+            plotForm.Show(); // or plotForm.Show() if you want it non-modal
         }
 
         private void buildRace(bool buildFromRaceBox = false)

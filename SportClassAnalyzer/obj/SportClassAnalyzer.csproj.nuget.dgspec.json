@@ -52,6 +52,10 @@
             "Microsoft.Web.WebView2": {
               "target": "Package",
               "version": "[1.0.2792.45, )"
+            },
+            "OxyPlot.WindowsForms": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             }
           },
           "imports": [

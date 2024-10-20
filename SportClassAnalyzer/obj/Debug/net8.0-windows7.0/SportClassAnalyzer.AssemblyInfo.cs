@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SportClassAnalyzer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b698e70e5e45208f052e50d790c5a4af3a6d51ec")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2dc255229154fc83506581b7ab9e9435479b0238")]
 [assembly: System.Reflection.AssemblyProductAttribute("SportClassAnalyzer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SportClassAnalyzer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "JJ/sWr0Klpq3EbqufvnJhRIt2E8Eq9uJo7nE5lVXuLJUnYD7iF65oeb4VhPU/X9lVufP2qT+/SrO1g5E51Iktg==",
+  "dgSpecHash": "/Y0slg663kVe3OwTzzNfB7q5IJDhiFRqVZEj6d2ddkaPWFgjEWtpcawWx7fY3PRSapR2RVyYkNrPWvxw1OQqBA==",
   "success": true,
   "projectFilePath": "C:\\LocalDev\\SportClassRacing\\SportClassAnalyzer\\SportClassAnalyzer.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\toddr\\.nuget\\packages\\microsoft.web.webview2\\1.0.2792.45\\microsoft.web.webview2.1.0.2792.45.nupkg.sha512"
+    "C:\\Users\\toddr\\.nuget\\packages\\microsoft.web.webview2\\1.0.2792.45\\microsoft.web.webview2.1.0.2792.45.nupkg.sha512",
+    "C:\\Users\\toddr\\.nuget\\packages\\oxyplot.core\\2.2.0\\oxyplot.core.2.2.0.nupkg.sha512",
+    "C:\\Users\\toddr\\.nuget\\packages\\oxyplot.windowsforms\\2.2.0\\oxyplot.windowsforms.2.2.0.nupkg.sha512"
   ],
   "logs": []
 }
