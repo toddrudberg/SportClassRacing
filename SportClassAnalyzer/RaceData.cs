@@ -56,6 +56,12 @@ namespace SportClassAnalyzer
 
             //List<cLapCrossings> lapCrossings = new List<cLapCrossings>();
             int crossings = LineCrossingDetector.DetectCrossings(myRaceData, homePylon, startFinishPylon, out lapCrossings);
+
+            if( crossings == 0)
+            {
+                Console.WriteLine("No laps detected");
+                return;
+            }
             Console.WriteLine("Lap detection complete");
             Console.WriteLine($"Number of laps detected: {crossings}");
             //truncate myRaceData to only include points between startOfRace and endOfRace

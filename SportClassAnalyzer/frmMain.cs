@@ -11,23 +11,19 @@ namespace SportClassAnalyzer
         public class cFormState
         {
             public static string sPylonFile = @"C:\LocalDev\SportClassRacing\SportClassOuterCourse.gpx";
-           //public static string sRaceDataFile = @"C:\LocalDev\SportClassRacing\TestData.gpx";
+            //public static string sRaceDataFile = @"C:\LocalDev\SportClassRacing\TestData.gpx";
             //public static string sRaceDataFile = @"C:\LocalDev\SportClassRacing\Slater Data\20241018_104841.gpx";
             //public static string sRaceDataFile = @"C:\LocalDev\SportClassRacing\Slater Data\20241018_142045.gpx";
             public static string sRaceDataFile = @"C:\LocalDev\SportClassRacing\Slater Data\20241018_142045.gpx";
         }
 
         //public List<pylonWpt> myPylons = new List<pylonWpt>();
-        
+
 
         public cPylons myPylons = new cPylons();
         public cRaceData myRaceData = new cRaceData();
 
         public List<cLapCrossings> myLapCrossings = new List<cLapCrossings>();
-
-        private bool isRaceBuilt = false;
-        private TaskCompletionSource<bool> raceBuiltCompletionSource = new TaskCompletionSource<bool>();
-
 
         #region Console Output
         [DllImport("kernel32.dll")]
@@ -91,7 +87,7 @@ namespace SportClassAnalyzer
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(screenWidth - this.Width, 0); // Right edge, top of screen
 
-            buildRace();
+            //buildRace();
             // Start race-building process asynchronously
             //_ = buildRaceAsync();
         }
@@ -101,10 +97,10 @@ namespace SportClassAnalyzer
         {
             // Wait until buildRace is complete before displaying the map
             //await raceBuiltCompletionSource.Task;
-            await DisplayMap();
+            //await DisplayMap();
         }
 
-        private void buildRace()
+        private void buildRace(bool buildFromRaceBox = false)
         {
             Console.WriteLine("Loading Pylon Data");
             // Load the pylons
@@ -116,7 +112,7 @@ namespace SportClassAnalyzer
             }
             //write the pylons to a listbox
             myPylons.pylonWpts = pylons.wpt.ToList();
-            myPylons.assignCartisianCoordinates(pylons.elevationInFeet);
+            myPylons.assignCartisianCoordinates(0);//pylons.elevationInFeet);
             myPylons.assignSegments();
 
 
@@ -125,14 +121,25 @@ namespace SportClassAnalyzer
                 listBox1.Items.Add(wpt);
             }
 
-
-            Console.WriteLine("Loading Race Data");
-            // Load the race data
             gpx raceData = null;
-            XmlSerializer raceSerializer = new XmlSerializer(typeof(gpx));
-            using (FileStream fs = new FileStream(cFormState.sRaceDataFile, FileMode.Open))
+            if(buildFromRaceBox)
             {
-                raceData = (gpx)raceSerializer.Deserialize(fs);
+                Console.WriteLine("Loading RaceBox Data");
+                List<cRaceBoxRecord> raceBoxRecords =  cRaceBoxParser.ParseCsv(cFormState.sRaceDataFile);
+                Console.WriteLine("Converting RaceBox Data to GPX");
+                raceData = cRaceBoxParser.ConvertRaceBoxToGpx(raceBoxRecords);
+
+            }
+            else
+            {
+                Console.WriteLine("Loading Race Data");
+                // Load the race data
+                
+                XmlSerializer raceSerializer = new XmlSerializer(typeof(gpx));
+                using (FileStream fs = new FileStream(cFormState.sRaceDataFile, FileMode.Open))
+                {
+                    raceData = (gpx)raceSerializer.Deserialize(fs);
+                }
             }
             // Process the race data as needed
             // For example, add race data to a listbox
@@ -140,9 +147,6 @@ namespace SportClassAnalyzer
             {
                 listBox2.Items.Add(gpxTrkTrkpt);
             }
-
-            
-
 
             myRaceData.myRaceData = raceData.trk.trkseg.ToList();
             myRaceData.assignCartisianCoordinates(myPylons.homePylon());
@@ -269,21 +273,21 @@ namespace SportClassAnalyzer
         //    }
         //}
         // Define different colors for each lap
-        string[] lapColors = { "red", "blue", "green", "purple", "orange" };
+        string[] lapColors = { "red", "blue", "green", "purple", "orange", "yellow", "magenta", "cyan" };
 
         int lapIndex = 0; // To track lap number
 
         public async void PlotRaceData(List<racePoint> myRaceData, List<cLapCrossings> lapCrossings)
         {
             lapIndex = 1;
-            
+
             // Use a different color for each lap
             string lapColor = lapColors[lapIndex % lapColors.Length]; // Cycle through colors if needed
 
             // Call JavaScript to start a new lap (reset points for new polyline)
             await webView2Control.ExecuteScriptAsync("startNewLap();");
 
-            for( int nLap = 0; nLap < lapCrossings.Count - 1; nLap++)
+            for (int nLap = 0; nLap < lapCrossings.Count - 1; nLap++)
             {
                 // Use a different color for each lap
                 lapColor = lapColors[lapIndex % lapColors.Length]; // Cycle through colors if needed
@@ -297,12 +301,74 @@ namespace SportClassAnalyzer
                     // Convert latitude and longitude from decimal to double
                     double lat = (double)myRaceData[i].lat;
                     double lon = (double)myRaceData[i].lon;
+                    //Thread.Sleep(50);
 
                     // Inject JavaScript to add the marker to the map with lap-specific color
                     string script = $"addRaceDataPoint({lat}, {lon}, '{lapColor}');";
                     await webView2Control.ExecuteScriptAsync(script);
                 }
                 lapIndex++;
+            }
+
+            if (lapCrossings.Count == 0)
+            {
+                for (int i = 0; i < myRaceData.Count; i++)
+                {
+                    // Convert latitude and longitude from decimal to double
+                    double lat = (double)myRaceData[i].lat;
+                    double lon = (double)myRaceData[i].lon;
+                    //Thread.Sleep(50);
+
+                    // Inject JavaScript to add the marker to the map with lap-specific color
+                    string script = $"addRaceDataPoint({lat}, {lon}, '{lapColor}');";
+                    await webView2Control.ExecuteScriptAsync(script);
+                }
+            }
+        }
+
+
+        private async void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "GPX files|*.gpx";
+            openFileDialog1.Title = "Select a GPX file";
+            openFileDialog1.ShowDialog();
+            if (openFileDialog1.FileName != "")
+            {
+                myLapCrossings.Clear();
+                myPylons.pylonWpts.Clear();
+                myRaceData.myRaceData.Clear();
+                if (webView2Control.CoreWebView2 != null)
+                {
+                    await webView2Control.ExecuteScriptAsync("clearMap();");
+                }
+
+
+                cFormState.sRaceDataFile = openFileDialog1.FileName;
+                buildRace();
+                await DisplayMap();
+            }
+        }
+
+        private async void openRaceBoxFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "RaceBox csv|*.csv";
+            openFileDialog1.Title = "Select a RaceBox file";
+            openFileDialog1.ShowDialog();
+            if (openFileDialog1.FileName != "")
+            {
+                myLapCrossings.Clear();
+                myPylons.pylonWpts.Clear();
+                myRaceData.myRaceData.Clear();
+                if (webView2Control.CoreWebView2 != null)
+                {
+                    webView2Control.CoreWebView2.ExecuteScriptAsync("clearMap();");
+                }
+
+                cFormState.sRaceDataFile = openFileDialog1.FileName;
+                buildRace(true);
+                await DisplayMap();
             }
         }
     }
